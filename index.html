@@ -1,0 +1,9 @@
+<!doctype html><html lang="uz"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pulqani</title><style>body{font-family:system-ui;margin:0;background:#f5f7fb;color:#172033}.a{max-width:700px;margin:auto;padding:20px}.c{background:white;padding:20px;border-radius:18px;margin:12px 0}input,select,button{padding:12px;border-radius:10px;border:1px solid #ddd;margin:4px}button{background:#18a673;color:#fff;border:0;font-weight:700}.num{font-size:26px;font-weight:800}.row{padding:10px;border-bottom:1px solid #eee}</style>
+<div class=a><h1>Hisob<span style=color:#18a673>chi</span></h1><div class=c><div>Balans</div><div class=num id=b>0 so‘m</div></div>
+<div class=c><h3>Yangi yozuv</h3><input id=a type=number placeholder="Summa"><select id=k><option value=expense>Xarajat</option><option value=income>Daromad</option></select><select id=c><option>Oziq-ovqat</option><option>Transport</option><option>O‘qish</option><option>Kiyim</option><option>Uy</option><option>Telefon/Internet</option><option>Boshqa</option></select><input id=n placeholder="Izoh"><button onclick=add()>Saqlash</button></div>
+<div class=c><h3>Oxirgi yozuvlar</h3><div id=l></div></div></div>
+<script>
+async function load(){let r=await fetch('/api/transactions'),x=await r.json();let inc=x.filter(q=>q.kind==='income').reduce((a,q)=>a+q.amount,0),exp=x.filter(q=>q.kind==='expense').reduce((a,q)=>a+q.amount,0);b.textContent=(inc-exp).toLocaleString('uz-UZ')+' so‘m';l.innerHTML=x.map(q=>`<div class=row>${q.note} — ${q.kind==='income'?'+':'−'}${q.amount.toLocaleString('uz-UZ')} so‘m<br><small>${q.category}</small></div>`).join('')||'Hali yozuv yo‘q'}
+async function add(){if(!a.value)return;await fetch('/api/transactions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:a.value,kind:k.value,category:c.value,note:n.value||'Izohsiz'})});a.value='';n.value='';load()}load()
+</script>
