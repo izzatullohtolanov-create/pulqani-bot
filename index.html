@@ -10,3 +10,10 @@
 async function load(){let r=await fetch('/api/transactions'),x=await r.json();let inc=x.filter(q=>q.kind==='income').reduce((a,q)=>a+q.amount,0),exp=x.filter(q=>q.kind==='expense').reduce((a,q)=>a+q.amount,0);b.textContent=(inc-exp).toLocaleString('uz-UZ')+' so‘m';l.innerHTML=x.map(q=>`<div class=row>${q.note} — ${q.kind==='income'?'+':'−'}${q.amount.toLocaleString('uz-UZ')} so‘m<br><small>${q.category}</small></div>`).join('')||'Hali yozuv yo‘q'}
 async function add(){if(!a.value)return;await fetch('/api/transactions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:a.value,kind:k.value,category:c.value,note:n.value||'Izohsiz'})});a.value='';n.value='';load()}load()
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js");
+  });
+}
+  </script>
