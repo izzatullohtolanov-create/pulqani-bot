@@ -1,0 +1,10 @@
+{
+  "name": "Pul Qani",
+  "short_name": "Pul Qani",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111827",
+  "orientation": "portrait",
+  "icons": []
+}
